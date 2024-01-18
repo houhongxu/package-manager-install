@@ -1,0 +1,32 @@
+{
+  "name": "package-manager-install",
+  "version": "0.0.2",
+  "description": "auto install packages use user's package manager",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "./lib"
+  ],
+  "scripts": {
+    "build": "rollup ./src/index.ts --file ./lib/index.js --plugin typescript,node-resolve,commonjs --format cjs",
+    "dev": "pnpm build --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^20.10.5",
+    "@types/lodash-es": "^4.17.12",
+    "rollup": "^4.9.5"
+  },
+  "dependencies": {
+    "cross-spawn": "^7.0.3",
+    "lodash-es": "^4.17.21",
+    "lookpath": "^1.2.2",
+    "types-directory": "^0.313.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "client",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ms": "^2.1.3",
+    "package-manager-install": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/ms": "^0.7.34",
+    "tsx": "^4.7.0"
+  }
+}
