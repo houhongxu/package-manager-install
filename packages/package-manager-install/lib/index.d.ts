@@ -1,2 +1,2 @@
-import { pkgManagerInstall } from './pkgManagerInstall';
-export default pkgManagerInstall;
+import { packageManagerInstall } from "./packageManagerInstall";
+export default packageManagerInstall;

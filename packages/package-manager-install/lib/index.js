@@ -36,12 +36,12 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
-const PKG_MANAGER_FILES = [
+const PACKAGE_MANAGER_FILES = [
     { lockFile: 'yarn.lock', packageManager: 'yarn' },
     { lockFile: 'pnpm-lock.yaml', packageManager: 'pnpm' },
     { lockFile: 'package-lock.json', packageManager: 'npm' },
 ];
-const PKG_MANAGER_NAMES = ['pnpm', 'yarn', 'npm'];
+const PACKAGE_MANAGER_NAMES = ['pnpm', 'yarn', 'npm'];
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -827,11 +827,11 @@ function lookpath(command, opt) {
 }
 lookpath_1 = lib.lookpath = lookpath;
 
-function pkgManagerInstall({ 
+function packageManagerInstall({ 
 /**
  * 包数组
  */
-pkgs, 
+packages, 
 /**
  * 包管理工具参数
  */
@@ -839,17 +839,17 @@ options,
 /**
  * 自定义包管理工具
  */
-pkgManager, }) {
+packageManager, }) {
     return __awaiter$1(this, void 0, void 0, function* () {
         const cwd = process.cwd();
-        const packageManager = pkgManager !== null && pkgManager !== void 0 ? pkgManager : (yield getPkgManager(cwd));
-        const args = ['install', ...pkgs, ...(options !== null && options !== void 0 ? options : [])];
+        const formatedPackageManager = packageManager !== null && packageManager !== void 0 ? packageManager : (yield getPackageManager(cwd));
+        const args = ["install", ...(packages !== null && packages !== void 0 ? packages : []), ...(options !== null && options !== void 0 ? options : [])];
         return new Promise((resolve, reject) => {
             // 使用子进程防止下载包失败影响主进程
-            const child = spawn$1(packageManager, args, { stdio: 'inherit' });
-            child.on('close', (code) => {
+            const child = spawn$1(formatedPackageManager, args, { stdio: "inherit" });
+            child.on("close", (code) => {
                 if (code !== 0) {
-                    reject({ command: `${packageManager} ${args.join(' ')}` });
+                    reject({ command: `${packageManager} ${args.join(" ")}` });
                     return;
                 }
                 resolve();
@@ -857,30 +857,30 @@ pkgManager, }) {
         });
     });
 }
-function getPkgManager(baseDir) {
+function getPackageManager(baseDir) {
     return __awaiter$1(this, void 0, void 0, function* () {
         // 优先找lock文件
-        for (const { lockFile, packageManager } of PKG_MANAGER_FILES) {
+        for (const { lockFile, packageManager } of PACKAGE_MANAGER_FILES) {
             if (require$$0.existsSync(require$$0$1.join(baseDir, lockFile))) {
                 return packageManager;
             }
         }
         // 其次找命令
-        for (const name of PKG_MANAGER_NAMES) {
-            const isExist = yield checkPkgManager(name);
+        for (const name of PACKAGE_MANAGER_NAMES) {
+            const isExist = yield checkPackageManager(name);
             if (isExist) {
                 return name;
             }
         }
-        console.error('未找到包管理器 pnpm/yarn/npm');
+        console.error("未找到包管理器 pnpm/yarn/npm");
         process.exit(0);
     });
 }
-function checkPkgManager(name) {
+function checkPackageManager(name) {
     return __awaiter$1(this, void 0, void 0, function* () {
         const path = yield lookpath_1(name);
         return Boolean(path);
     });
 }
 
-module.exports = pkgManagerInstall;
+module.exports = packageManagerInstall;
