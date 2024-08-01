@@ -827,7 +827,7 @@ function lookpath(command, opt) {
 }
 lookpath_1 = lib.lookpath = lookpath;
 
-function packageManagerInstall({ 
+function packageManagerInstall(
 /**
  * 包数组
  */
@@ -839,7 +839,7 @@ options,
 /**
  * 自定义包管理工具
  */
-packageManager, }) {
+packageManager) {
     return __awaiter$1(this, void 0, void 0, function* () {
         const cwd = process.cwd();
         const formatedPackageManager = packageManager !== null && packageManager !== void 0 ? packageManager : (yield getPackageManager(cwd));

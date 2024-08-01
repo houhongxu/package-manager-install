@@ -5,24 +5,22 @@ import { PACKAGE_MANAGER_FILES, PACKAGE_MANAGER_NAMES } from "./constants";
 import spawn from "cross-spawn";
 import { lookpath } from "lookpath";
 
-export async function packageManagerInstall({
+export async function packageManagerInstall(
   /**
    * 包数组
    */
-  packages,
+  packages?: string[],
+
   /**
    * 包管理工具参数
    */
-  options,
+  options?: string[],
+
   /**
    * 自定义包管理工具
    */
-  packageManager,
-}: {
-  packages?: string[];
-  options?: string[];
-  packageManager?: PackageManager;
-}) {
+  packageManager?: PackageManager
+) {
   const cwd = process.cwd();
 
   const formatedPackageManager =
