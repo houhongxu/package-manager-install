@@ -5,32 +5,42 @@ import { PACKAGE_MANAGER_FILES, PACKAGE_MANAGER_NAMES } from "./constants";
 import spawn from "cross-spawn";
 import { lookpath } from "lookpath";
 
-export async function packageManagerInstall(
+export async function packageManagerInstall(config?: {
   /**
    * 包数组
    */
-  packages?: string[],
+  packages?: string[];
 
   /**
    * 包管理工具参数
    */
-  options?: string[],
+  options?: string[];
+
+  /**
+   * 执行目录
+   */
+  cwd?: string;
 
   /**
    * 自定义包管理工具
    */
-  packageManager?: PackageManager
-) {
-  const cwd = process.cwd();
+  packageManager?: PackageManager;
+}) {
+  const { packages, cwd, packageManager, options } = config ?? {};
+
+  const formatedCwd = cwd ?? process.cwd();
 
   const formatedPackageManager =
-    packageManager ?? (await getPackageManager(cwd));
+    packageManager ?? (await getPackageManager(formatedCwd));
 
   const args: string[] = ["install", ...(packages ?? []), ...(options ?? [])];
 
   return new Promise<void>((resolve, reject) => {
     // 使用子进程防止下载包失败影响主进程
-    const child = spawn(formatedPackageManager, args, { stdio: "inherit" });
+    const child = spawn(formatedPackageManager, args, {
+      stdio: "inherit",
+      cwd: formatedCwd,
+    });
 
     child.on("close", (code) => {
       if (code !== 0) {

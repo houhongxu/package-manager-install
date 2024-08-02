@@ -827,26 +827,18 @@ function lookpath(command, opt) {
 }
 lookpath_1 = lib.lookpath = lookpath;
 
-function packageManagerInstall(
-/**
- * 包数组
- */
-packages, 
-/**
- * 包管理工具参数
- */
-options, 
-/**
- * 自定义包管理工具
- */
-packageManager) {
+function packageManagerInstall(config) {
     return __awaiter$1(this, void 0, void 0, function* () {
-        const cwd = process.cwd();
-        const formatedPackageManager = packageManager !== null && packageManager !== void 0 ? packageManager : (yield getPackageManager(cwd));
+        const { packages, cwd, packageManager, options } = config !== null && config !== void 0 ? config : {};
+        const formatedCwd = cwd !== null && cwd !== void 0 ? cwd : process.cwd();
+        const formatedPackageManager = packageManager !== null && packageManager !== void 0 ? packageManager : (yield getPackageManager(formatedCwd));
         const args = ["install", ...(packages !== null && packages !== void 0 ? packages : []), ...(options !== null && options !== void 0 ? options : [])];
         return new Promise((resolve, reject) => {
             // 使用子进程防止下载包失败影响主进程
-            const child = spawn$1(formatedPackageManager, args, { stdio: "inherit" });
+            const child = spawn$1(formatedPackageManager, args, {
+                stdio: "inherit",
+                cwd: formatedCwd,
+            });
             child.on("close", (code) => {
                 if (code !== 0) {
                     reject({ command: `${packageManager} ${args.join(" ")}` });
