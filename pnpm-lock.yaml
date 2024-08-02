@@ -31,22 +31,6 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0
 
-  examples/client:
-    dependencies:
-      ms:
-        specifier: ^2.1.3
-        version: 2.1.3
-      package-manager-install:
-        specifier: workspace:*
-        version: link:../../packages/package-manager-install
-    devDependencies:
-      '@types/ms':
-        specifier: ^0.7.34
-        version: 0.7.34
-      tsx:
-        specifier: ^4.7.0
-        version: 4.7.0
-
   packages/package-manager-install:
     dependencies:
       cross-spawn:

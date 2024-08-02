@@ -1,6 +1,6 @@
-import pkgManagerInstall from "package-manager-install";
+import { packageManagerInstall } from "../../packages/package-manager-install/lib/packageManagerInstall";
 
-pkgManagerInstall({
+packageManagerInstall({
   packages: ["@types/ms"],
   options: ["--save-dev"],
 });

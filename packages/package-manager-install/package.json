@@ -8,7 +8,7 @@
     "./lib"
   ],
   "scripts": {
-    "build": "rollup ./src/index.ts --file ./lib/index.js --plugin typescript,node-resolve,commonjs --format cjs",
+    "build": "rm -rf lib && rollup ./src/index.ts --file ./lib/index.js --plugin typescript,node-resolve,commonjs --format cjs",
     "dev": "pnpm build --watch"
   },
   "keywords": [],
