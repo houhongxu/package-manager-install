@@ -1,6 +1,6 @@
 {
   "name": "package-manager-install",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "auto install packages use user's package manager",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
